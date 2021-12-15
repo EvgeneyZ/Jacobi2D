@@ -3,7 +3,6 @@
 #include <math.h>
 #include "mpi.h"
 
-#define m_printf if (rank == 0) printf // Only master prints
 #define N 3500      // Matrix size
 #define ITMAX 1000  // Iterations
 
@@ -31,9 +30,10 @@ int main(int argc, char **argv)
     lastrow = (((rank + 1) * N) / numtasks) - 1;
     nrow = lastrow - startrow + 1;
     
-    m_printf("PROGRAMM STARTED\n");
-    m_printf("Number of processes: %d\n", numtasks);
-
+    if (rank == 0) {
+        printf("PROGRAMM STARTED\n");
+        printf("Number of processes: %d\n", numtasks);
+    }
     // Initialize matrices
     A = malloc((nrow + 2) * N * sizeof(double));
     B = malloc((nrow + 2) * N * sizeof(double));
@@ -125,7 +125,9 @@ int main(int argc, char **argv)
     MPI_Reduce(&local_sum, &total_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
     MPI_Finalize();
 
-    m_printf("S = %lf\n", total_sum);
+    if (rank == 0) {
+        printf("S = %lf\n", total_sum);
+    }
 
     return 0;
 }

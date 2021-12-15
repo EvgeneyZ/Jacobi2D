@@ -8,7 +8,7 @@
 #define Max(a,b) ((a)>(b)?(a):(b))
 
 //#define N (2*2*2*2*2*2+2)
-#define N 500
+#define N 1000
 
 float maxeps = 0.1e-7;
 int itmax = 1000;
@@ -32,7 +32,7 @@ int main(int an, char **as)
     int iteration = 1;
     while (eps > maxeps && iteration <= itmax) {
         relax();
-        eps = resid();
+        //eps = resid();
         printf("it=%4i  eps=%f\n", iteration, eps);
         iteration++;
     }
