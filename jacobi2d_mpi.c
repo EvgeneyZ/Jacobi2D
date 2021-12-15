@@ -66,16 +66,16 @@ int main(int argc, char **argv)
       
         // Send and receive shadow edges
         if (rank != 0) {
-            MPI_Irecv(&A[0][0], N, MPI_DOUBLE, rank - 1, 1215, MPI_COMM_WORLD, &request[0]);
+            MPI_Irecv(&A[0][0], N, MPI_DOUBLE, rank - 1, 1, MPI_COMM_WORLD, &request[0]);
         }
         if (rank != numtasks - 1) {
-            MPI_Isend(&A[nrow][0], N, MPI_DOUBLE, rank + 1, 1215, MPI_COMM_WORLD, &request[2]);
+            MPI_Isend(&A[nrow][0], N, MPI_DOUBLE, rank + 1, 1, MPI_COMM_WORLD, &request[2]);
         }
         if (rank != numtasks - 1) {
-            MPI_Irecv(&A[nrow + 1][0], N, MPI_DOUBLE, rank + 1, 1216, MPI_COMM_WORLD, &request[3]);
+            MPI_Irecv(&A[nrow + 1][0], N, MPI_DOUBLE, rank + 1, 2, MPI_COMM_WORLD, &request[3]);
         }
         if (rank != 0) {
-            MPI_Isend(&A[1][0], N, MPI_DOUBLE, rank - 1, 1216, MPI_COMM_WORLD, &request[1]);
+            MPI_Isend(&A[1][0], N, MPI_DOUBLE, rank - 1, 2, MPI_COMM_WORLD, &request[1]);
         }
 
         int wait_for = 4;
